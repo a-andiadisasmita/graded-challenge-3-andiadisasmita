@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+  title: Hacktivagram API
+  description: API documentation for Hacktivagram
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /users/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        description: User registration details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                full_name:
+                  type: string
+                email:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+                age:
+                  type: integer
+              required:
+                - full_name
+                - email
+                - username
+                - password
+                - age
+      responses:
+        "201":
+          description: User registered successfully
+        "400":
+          description: Invalid request body
+
+  /users/login:
+    post:
+      summary: User login
+      requestBody:
+        description: Login credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        "200":
+          description: Login successful
+        "401":
+          description: Invalid email or password
+
+  /posts:
+    get:
+      summary: Retrieve all posts
+      responses:
+        "200":
+          description: List of all posts
+    post:
+      summary: Create a new post
+      requestBody:
+        description: Post details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                image_url:
+                  type: string
+              required:
+                - image_url
+      responses:
+        "201":
+          description: Post created successfully
+        "400":
+          description: Invalid request body
+
+  /comments:
+    post:
+      summary: Add a comment to a post
+      requestBody:
+        description: Comment details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                post_id:
+                  type: integer
+              required:
+                - content
+                - post_id
+      responses:
+        "201":
+          description: Comment created successfully
+        "400":
+          description: Invalid request body
